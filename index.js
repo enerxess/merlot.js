@@ -2,7 +2,7 @@
 
 const merlot = require('./dist/merlot');
 const merlotExpress = require('./dist/merlot-express-middleware');
-const merlotMongoose = require('./dist/merlotMongoose');
+const merlotMongoose = require('./dist/merlot-mongoose');
 const merlotTypes = require('./dist/merlot-types');
 
 module.exports = {
