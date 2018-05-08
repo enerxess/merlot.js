@@ -1,9 +1,9 @@
 'use strict';
 
-const merlot = require('./src/merlot');
-const merlotExpress = require('./src/merlot-express-middleware');
-const merlotMongoose = require('./src/merlotMongoose');
-const merlotTypes = require('./src/merlot-types');
+const merlot = require('./dist/merlot');
+const merlotExpress = require('./dist/merlot-express-middleware');
+const merlotMongoose = require('./dist/merlotMongoose');
+const merlotTypes = require('./dist/merlot-types');
 
 module.exports = {
   core: merlot,
