@@ -5,7 +5,7 @@ const merlotExpress = require('./dist/merlot-express-middleware');
 const merlotMongoose = require('./dist/merlot-mongoose');
 const merlotTypes = require('./dist/merlot-types');
 
-const exportObj = merlot;
+const exportObj = merlot.default;
 exportObj.express = merlotExpress.default;
 exportObj.mongoose = merlotMongoose.default;
 exportObj.types = merlotTypes.default;
