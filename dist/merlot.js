@@ -4,15 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _merlotTypes = require('./merlot-types');
 
 var _merlotTypes2 = _interopRequireDefault(_merlotTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _ = require('lodash');
+
 
 var schemes = [];
 
@@ -103,7 +102,7 @@ function validateNode(obj, parent) {
 
     var tmpErrors = [];
     obj.value.forEach(function (value) {
-      var tmpObj = _lodash2.default.cloneDeep(obj);
+      var tmpObj = _.cloneDeep(obj);
       tmpObj.value = value;
       tmpObj = validateNode(tmpObj, obj);
       if (tmpObj.errors && tmpObj.errors.length) {
@@ -112,7 +111,7 @@ function validateNode(obj, parent) {
         });
       }
     });
-    obj.errors = _lodash2.default.uniq(obj.errors);
+    obj.errors = _.uniq(obj.errors);
     if (!obj.errors.length) {
       Reflect.deleteProperty(obj, 'errors');
     }
@@ -125,7 +124,7 @@ function validateNode(obj, parent) {
   }
   if (obj.type === Number) {
     obj.value = obj.type(obj.value);
-    if (!obj.value) obj.errors.push('NaN');
+    if (!obj.value && obj.value !== 0) obj.errors.push('NaN');
   }
   if (obj.type === Date) {
     obj.value = new (obj.type(obj.value))();
@@ -195,8 +194,8 @@ function rTypeValidation(data, schema) {
 }
 
 var validate = function validate(data, schema, schemaName) {
-  var _schema = _lodash2.default.cloneDeep(schema);
-  var populatedSchema = _lodash2.default.merge(_schema, rTransformData(data));
+  var _schema = _.cloneDeep(schema);
+  var populatedSchema = _.merge(_schema, rTransformData(data));
   var typeValidatedSchema = rTypeValidation(populatedSchema, getSchemaByName(schemaName));
   var validatedSchema = rValidatePopulatedSchema(typeValidatedSchema);
   return validatedSchema;
@@ -272,7 +271,7 @@ var hasValidationErrors = function hasValidationErrors(validatedSchema) {
 };
 
 var removeMetaFromSchema = function removeMetaFromSchema(schema) {
-  var _schema = _lodash2.default.cloneDeep(schema);
+  var _schema = _.cloneDeep(schema);
 
   function rRemoveMeta(schema) {
     Object.keys(schema).forEach(function (key) {
@@ -316,4 +315,4 @@ var initializeSchema = function initializeSchema(name, schema) {
   return schema;
 };
 
-exports.default = { validate: validate, getValidationErrors: getValidationErrors, hasValidationErrors: hasValidationErrors, initializeSchema: initializeSchema, removeMetaFromSchema: removeMetaFromSchema, rTransformData: rTransformData };
+exports.default = { validate: validate, getValidationErrors: getValidationErrors, hasValidationErrors: hasValidationErrors, initializeSchema: initializeSchema, removeMetaFromSchema: removeMetaFromSchema, rTransformData: rTransformData, Validator: Validator };

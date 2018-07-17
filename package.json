@@ -2,9 +2,9 @@
   "name": "merlot.js",
   "version": "0.0.5-alpha",
   "description": "A lightweight javascript library to handle and validate data.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "dist": "babel src -d dist"
   },
   "repository": {
@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/enerxess/merlot.js#readme",
   "dependencies": {
+    "chai": "^4.1.2",
     "lodash": "^4.17.5",
+    "mocha": "^5.2.0",
     "mongoose": "^5.0.13"
   },
   "devDependencies": {

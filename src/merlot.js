@@ -1,6 +1,6 @@
 'use strict';
 
-import _ from 'lodash';
+const _ = require('lodash');
 import merlotTypes from './merlot-types';
 
 const schemes = [];
@@ -114,7 +114,7 @@ function validateNode(obj, parent) {
   }
   if(obj.type === Number) {
     obj.value = obj.type(obj.value);
-    if(!obj.value) obj.errors.push('NaN');
+    if(!obj.value && obj.value !== 0) obj.errors.push('NaN');
   }
   if(obj.type === Date) {
     obj.value = new (obj.type(obj.value));
@@ -303,4 +303,4 @@ const initializeSchema = function(name, schema) {
   return schema;
 };
 
-export default { validate, getValidationErrors, hasValidationErrors, initializeSchema, removeMetaFromSchema, rTransformData };
+export default { validate, getValidationErrors, hasValidationErrors, initializeSchema, removeMetaFromSchema, rTransformData, Validator };
