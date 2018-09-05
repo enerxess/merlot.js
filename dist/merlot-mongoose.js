@@ -18,9 +18,20 @@ var mongooseModels = [];
 
 var TYPE_MIXED = _mongoose2.default.Schema.Types.Mixed;
 
-var registerSchemaToMongoose = function registerSchemaToMongoose(mongoose, schema) {
+var registerSchemaToMongoose = function registerSchemaToMongoose(mongoose, schema, schemaOptions, plugin) {
+  if (typeof schemaOptions === 'undefined') {
+    schemaOptions = {};
+  }
   var schemaName = schema.__name;
-  mongooseModels.push({ name: schemaName, model: mongoose.model(schemaName, _merlot2.default.removeMetaFromSchema(schema)) });
+  var cleanedSchema = new mongoose.Schema(_merlot2.default.removeMetaFromSchema(schema), schemaOptions);
+  if (typeof plugin !== 'undefined') {
+    if (plugin.config) {
+      cleanedSchema.plugin(plugin.plugin, plugin.config);
+    } else {
+      cleanedSchema.plugin(plugin.plugin);
+    }
+  }
+  mongooseModels.push({ name: schemaName, model: mongoose.model(schemaName, cleanedSchema) });
 };
 
 var getMongooseModel = function getMongooseModel(name) {
