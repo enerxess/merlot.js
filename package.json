@@ -1,6 +1,6 @@
 {
   "name": "merlot.js",
-  "version": "0.0.8-alpha",
+  "version": "0.0.9-alpha",
   "description": "A lightweight javascript library to handle and validate data.",
   "main": "dist/index.js",
   "scripts": {
@@ -12,12 +12,10 @@
     "url": "git+https://github.com/enerxess/merlot.js.git"
   },
   "author": "ener|xess GmbH",
-  "contributers": [
-    {
-      "name": "Tobias Engelberg",
-      "email": "tobias.engelberg@enerxess.com"
-    }
-  ],
+  "contributers": [{
+    "name": "Tobias Engelberg",
+    "email": "tobias.engelberg@enerxess.com"
+  }],
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
     "url": "https://github.com/enerxess/merlot.js/issues"

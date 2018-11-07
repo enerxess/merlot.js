@@ -127,7 +127,7 @@ function validateNode(obj, parent) {
     if (!obj.value && obj.value !== 0) obj.errors.push('NaN');
   }
   if (obj.type === Date) {
-    obj.value = new (obj.type(obj.value))();
+    obj.value = new Date(obj.value);
     if (!+obj.value) obj.errors.push('invalidDate');
   }
   if (obj.type === Boolean) {
@@ -219,11 +219,17 @@ function rGetValidationErrors(validatedSchema, errors, path) {
         }
       }
       if (schemaEntry.errors) {
-        errorsOut.push({ path: _tmpPath, errors: schemaEntry.errors });
+        errorsOut.push({
+          path: _tmpPath,
+          errors: schemaEntry.errors
+        });
       }
     } else {
       if (schemaEntry.errors) {
-        errorsOut.push({ path: tmpPath, errors: schemaEntry.errors });
+        errorsOut.push({
+          path: tmpPath,
+          errors: schemaEntry.errors
+        });
       }
     }
   });
@@ -234,11 +240,15 @@ var rTransformData = function rTransformData(data) {
   Object.keys(data).forEach(function (entry) {
     var dataEntry = data[entry];
     if (dataEntry instanceof Array) {
-      data[entry] = [{ value: dataEntry }];
+      data[entry] = [{
+        value: dataEntry
+      }];
     } else if (dataEntry instanceof Object) {
       data[entry] = rTransformData(dataEntry);
     } else {
-      data[entry] = { value: dataEntry };
+      data[entry] = {
+        value: dataEntry
+      };
     }
   });
   return data;
@@ -259,7 +269,13 @@ var hasValidationErrors = function hasValidationErrors(validatedSchema) {
           hasError = true;
         }
       } else if (!(schemaEntry.value && Object.keys(schemaEntry).length === 1)) {
-        if (rFindErrors(schemaEntry)) {
+        if (schemaEntry.value instanceof Array) {
+          schemaEntry.value.forEach(function (arrayEntry) {
+            if (arrayEntry.errors) {
+              hasError = true;
+            }
+          });
+        } else if (rFindErrors(schemaEntry)) {
           hasError = true;
         }
       }
@@ -315,4 +331,12 @@ var initializeSchema = function initializeSchema(name, schema) {
   return schema;
 };
 
-exports.default = { validate: validate, getValidationErrors: getValidationErrors, hasValidationErrors: hasValidationErrors, initializeSchema: initializeSchema, removeMetaFromSchema: removeMetaFromSchema, rTransformData: rTransformData, Validator: Validator };
+exports.default = {
+  validate: validate,
+  getValidationErrors: getValidationErrors,
+  hasValidationErrors: hasValidationErrors,
+  initializeSchema: initializeSchema,
+  removeMetaFromSchema: removeMetaFromSchema,
+  rTransformData: rTransformData,
+  Validator: Validator
+};
